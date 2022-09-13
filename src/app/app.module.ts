@@ -21,9 +21,9 @@ registerLocaleData(en);
 
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PostListComponent } from './components/post-list/post-list.component';
+import { PostFormComponent } from './components/post-form/post-form.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppComponent } from './app.component';
-import { PostFormComponent } from './post-form/post-form.component';
 
 @NgModule({
   declarations: [
