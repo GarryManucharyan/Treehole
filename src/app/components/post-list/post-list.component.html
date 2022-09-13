@@ -1,0 +1,31 @@
+<nz-list nzItemLayout="vertical">
+    <nz-list-item *ngFor="let post of posts">
+        <nz-list-item-meta>
+            <nz-list-item-meta-title>
+                {{ post.title }}
+            </nz-list-item-meta-title>
+            <nz-list-item-meta-description>
+                User {{ post.userId }} - {{today - post.id * 7777777| date: 'MMM d, yyyy, h:mm:ss a '}}
+            </nz-list-item-meta-description>
+        </nz-list-item-meta>
+        {{ post.body }}
+        <ul nz-list-item-actions class="actions">
+            <nz-list-item-action>
+                <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(post)"
+                    [ngClass]="{liked:post.isLiked}"></span>
+                {{post.likesCount}}
+            </nz-list-item-action>
+            <nz-list-item-action>
+                <span nz-icon class="dislike" nzType="dislike" style="margin-right: 8px;" (click)="onDislike(post)"
+                    [ngClass]="{disliked:post.isDisliked}"></span>
+                {{post.dislikesCount}}
+            </nz-list-item-action>
+            <nz-list-item-action>
+                <span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+                {{post.commentsCount}}
+            </nz-list-item-action>
+        </ul>
+        <nz-list-item-extra>
+        </nz-list-item-extra>
+    </nz-list-item>
+</nz-list>
