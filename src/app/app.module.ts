@@ -6,8 +6,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +38,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     NzPageHeaderModule,
     NzPaginationModule,
     HttpClientModule,
@@ -42,7 +46,9 @@ import { AppComponent } from './app.component';
     NzButtonModule,
     NzLayoutModule,
     NzSpaceModule,
+    NzInputModule,
     BrowserModule,
+    NzFormModule,
     NzListModule,
     NzIconModule,
     FormsModule,

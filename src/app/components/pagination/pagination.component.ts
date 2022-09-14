@@ -1,24 +1,28 @@
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.less']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnDestroy {
   public currentPage: number = 1;
   public pageSize: number = 10;
   public total?: number;
 
   constructor(private dataService: DataServiceService) { }
 
+  private subscribtions: Subscription[] = []
+
   ngOnInit(): void {
-    this.dataService.getAllPosts().subscribe(response => {
+
+    this.subscribtions.push(this.dataService.getAllPosts().subscribe(response => {
       this.dataService.pageData.allPosts = response;
       this.dataService.spreadPostsByPages();
       this.total = this.dataService.pageData.postsBuffer.length * this.pageSize
-    })
+    }))
   }
 
   onPageSizeChange(pageSize: number): void {
@@ -32,5 +36,11 @@ export class PaginationComponent implements OnInit {
     this.dataService.currentPageSubject.next(currentPage);
     this.currentPage = currentPage;
     console.log("current Page " + currentPage);
+  }
+
+  ngOnDestroy() {
+    for (let i = 0; i < this.subscribtions.length; i++) {
+      this.subscribtions[i].unsubscribe()
+    }
   }
 }
