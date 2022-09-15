@@ -4,6 +4,7 @@ import { NzPaginationModule } from "ng-zorro-antd/pagination";
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { AppComponent } from './app.component';
     NzPaginationModule,
     HttpClientModule,
     AppRoutingModule,
+    NzCommentModule,
     NzButtonModule,
     NzLayoutModule,
     NzSpaceModule,

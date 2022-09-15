@@ -5,7 +5,8 @@
             <input id="title" nz-input formControlName="title" />
             <ng-template #titleError let-control>
                 <ng-container *ngIf="control.errors?.['required']"> Please input the title!</ng-container>
-                <ng-container *ngIf="control.errors?.['minlength']"> min 3 symbols!</ng-container>
+                <ng-container *ngIf="control.errors?.['minlength']"> min 10 symbols!</ng-container>
+                <ng-container *ngIf="control.errors?.['maxlength']"> max 200 symbols!</ng-container>
             </ng-template>
         </nz-form-control>
     </nz-form-item>
@@ -15,7 +16,8 @@
             <textarea id="message" nz-input id="message" rows="5" formControlName="message"></textarea>
             <ng-template #messageError let-control>
                 <ng-container *ngIf="control.errors?.['required']">Please input the message!</ng-container>
-                <ng-container *ngIf="control.errors?.['minlength']">min 3 symbols!</ng-container>
+                <ng-container *ngIf="control.errors?.['minlength']">min 50 symbols!</ng-container>
+                <ng-container *ngIf="control.errors?.['maxlength']">max 1000 symbols!</ng-container>
             </ng-template>
         </nz-form-control>
     </nz-form-item>
@@ -25,7 +27,7 @@
         <nz-form-control >
             <button  nz-button type="button" nzType="default" (click)="onNavigateToHomePage()"><span nz-icon nzType="left"
                     nzTheme="outline"></span>Cancel</button>
-            <button nz-button type="submit" nzType="primary"><span nz-icon nzType="save"
+            <button nz-button type="submit" nzType="primary" [disabled]="newPostForm.invalid"><span nz-icon nzType="save"
                     nzTheme="outline"></span>Submit</button>
         </nz-form-control>
     </nz-form-item>

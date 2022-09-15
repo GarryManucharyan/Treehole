@@ -22,13 +22,14 @@ export class PostFormComponent implements OnInit {
     this.newPostForm = this.formBuilder.group({
       title: ['', [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
+        Validators.minLength(10),
+        Validators.maxLength(200),
       ]
       ],
       message: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(50),
+        Validators.maxLength(1000),
       ]]
     })
     // this.newPostForm.get('title')?.valueChanges.subscribe(() => {      // <=== kodi es hatvacy im gracy chi, chem jnjum vor usumnasirem
@@ -37,7 +38,21 @@ export class PostFormComponent implements OnInit {
   }
 
   submitPost() {
-    console.log("bldux");
+    this.dataService.localData.unshift({
+      title: this.newPostForm.controls['title'].value,
+      body: this.newPostForm.controls['message'].value,
+      userId: this.dataService.localData.length,
+      id: this.dataService.localData.length,
+      commentsCount: 0,
+      dislikesCount: 0,
+      likesCount: 0,
+      isDisliked: false,
+      isLiked: false,
+      comments: [],
+      isCommentsGot: false,
+      showComments: false,
+    })
+    this.onNavigateToHomePage()
   }
 
   onNavigateToHomePage(): void {

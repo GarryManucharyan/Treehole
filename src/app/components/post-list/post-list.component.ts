@@ -1,6 +1,6 @@
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PostModel } from 'src/app/postModels';
+import { PostModel, CommentModel } from 'src/app/postModels';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private subscribtions: Subscription[] = [];
 
   public today: number = Date.now();
-  public posts: PostModel[]|null = [];
+  public posts: PostModel[] | null = [];
 
   constructor(private dataService: DataServiceService) { }
 
@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onLike(post: PostModel): void {
+  onLike(post: PostModel | CommentModel): void {
     if (!post.isLiked) {
       post.isLiked = true;
       post.likesCount++;
@@ -44,7 +44,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDislike(post: PostModel): void {
+  onDislike(post: PostModel | CommentModel): void {
     if (!post.isDisliked) {
       post.isDisliked = true;
       post.dislikesCount++;
@@ -55,6 +55,25 @@ export class PostListComponent implements OnInit, OnDestroy {
     } else {
       post.isDisliked = false;
       post.dislikesCount--;
+    }
+  }
+
+  onGetCommentsByPostId(post: PostModel, postId: number): void {
+    post.showComments = !post.showComments
+    if (!post.isCommentsGot) {
+      this.dataService.getCommentsByPostId(postId).subscribe(comments => {
+        for (let comment of comments) {
+          comment.likesCount = Math.floor(Math.random() * 10);
+          comment.dislikesCount = Math.floor(Math.random() * 3);
+          comment.isLiked = false;
+          comment.isDisliked = false;
+          comment.body = comment.body.split("\n").join(" ")
+        }
+        post.comments = comments;
+        post.commentsCount = comments.length;
+        post.isCommentsGot = true;
+        console.log(comments);
+      })
     }
   }
 
