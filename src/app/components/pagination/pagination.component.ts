@@ -17,30 +17,24 @@ export class PaginationComponent implements OnInit, OnDestroy {
   private subscribtions: Subscription[] = []
 
   ngOnInit(): void {
-
-    this.subscribtions.push(this.dataService.getAllPosts().subscribe(response => {
-      this.dataService.pageData.allPosts = response;
-      this.dataService.spreadPostsByPages();
-      this.total = this.dataService.pageData.postsBuffer.length * this.pageSize
+    this.subscribtions.push(this.dataService.currentPageSubject.subscribe(() => {
+      this.total = this.dataService.localData.length;
     }))
   }
 
   onPageSizeChange(pageSize: number): void {
     this.pageSize = pageSize;
-    this.dataService.spreadPostsByPages(pageSize);
-    this.dataService.pageSizeSubject.next(pageSize);
-    // this.onPageIndexChange(1);
+    this.dataService.currentPageSubject.next({ currentPage: this.currentPage, pageSize: pageSize });
   }
 
-  onPageIndexChange(currentPage: number) {
-    this.dataService.currentPageSubject.next(currentPage);
+  onPageIndexChange(currentPage: number): void {
     this.currentPage = currentPage;
-    console.log("current Page " + currentPage);
+    this.dataService.currentPageSubject.next({ currentPage: currentPage, pageSize: this.pageSize });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     for (let i = 0; i < this.subscribtions.length; i++) {
-      this.subscribtions[i].unsubscribe()
+      this.subscribtions[i].unsubscribe();
     }
   }
 }

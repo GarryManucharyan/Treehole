@@ -8,19 +8,15 @@ import { PostModel } from '../postModels';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataServiceService {
 
-  public pageData: PostsDataModel = {
-    allPosts: [],
-    postsBuffer: [],
-  };
+  public currentPageSubject: BehaviorSubject<{ currentPage: number | null , pageSize: number | null }>;
+  constructor(private http: HttpClient) { 
+    this.currentPageSubject = new BehaviorSubject<{ currentPage: number | null , pageSize: number | null }>({ currentPage:  null, pageSize:  null });
+  }
 
-  public currentPageSubject: BehaviorSubject<number> = new BehaviorSubject(1);
-  public pageSizeSubject: Subject<number> = new Subject
-
-
-
-  constructor(private http: HttpClient) { }
+  public localData: PostModel[] = []
 
   getAllPosts(): Observable<PostModel[]> {
     return this.http.get<PostModel[]>("https://jsonplaceholder.typicode.com/posts").pipe(map(posts => {
@@ -34,26 +30,14 @@ export class DataServiceService {
     }))
   }
 
-  spreadPostsByPages(pageSize: number = 10): void {
-    let result: PostModel[][] = [];
-    let dataPerPage: PostModel[] = [];
-    for (let i = 0; i < this.pageData.allPosts.length; i++) {
-      if (!(i % pageSize) && i) {
-        result.push(dataPerPage);
-        dataPerPage = [];
-      }
-      dataPerPage.push(this.pageData.allPosts[i])
+  getPageData(pageDataProps: { pageNumber: number, pageSize: number } = { pageNumber: 1, pageSize: 10 }) {
+    if (pageDataProps.pageNumber && pageDataProps.pageSize) {
+      let firstElemIndex = (pageDataProps.pageNumber - 1) * pageDataProps.pageSize;
+      let lastElemIndex = ((pageDataProps.pageNumber - 1) * pageDataProps.pageSize) + pageDataProps.pageSize;
+      let result = this.localData.slice(firstElemIndex, lastElemIndex);
+      console.log("getPageData called for page " + pageDataProps.pageNumber);
+      return result
     }
-    if (dataPerPage.length && dataPerPage.length <= pageSize) {
-      result.push(dataPerPage);
-    }
-    this.pageData.postsBuffer = result;
-    // console.log(this.pageData.postsBuffer);
+    return null
   }
-}
-
-
-export interface PostsDataModel {
-  allPosts: PostModel[],
-  postsBuffer: PostModel[][],
 }

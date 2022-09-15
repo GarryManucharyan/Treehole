@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onNavigateToHomePage():void{
+  onNavigateToPostForm(): void {
     this.router.navigate(["create_new_post"])
   }
 

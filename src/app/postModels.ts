@@ -1,10 +1,3 @@
-export interface PostResponseModel {
-    userId: number,
-    title: string,
-    body: string,
-    id: number
-}
-
 export interface PostModel {
     commentsCount: number,
     dislikesCount: number,

@@ -4,7 +4,7 @@
         <nz-form-control [nzSpan]="14"  [nzErrorTip]="titleError">
             <input id="title" nz-input formControlName="title" />
             <ng-template #titleError let-control>
-                <ng-container *ngIf="control.errors?.['required']"> Please input title!</ng-container>
+                <ng-container *ngIf="control.errors?.['required']"> Please input the title!</ng-container>
                 <ng-container *ngIf="control.errors?.['minlength']"> min 3 symbols!</ng-container>
             </ng-template>
         </nz-form-control>
@@ -14,7 +14,7 @@
         <nz-form-control [nzSpan]="14" [nzErrorTip]="messageError">
             <textarea id="message" nz-input id="message" rows="5" formControlName="message"></textarea>
             <ng-template #messageError let-control>
-                <ng-container *ngIf="control.errors?.['required']">Please input message!</ng-container>
+                <ng-container *ngIf="control.errors?.['required']">Please input the message!</ng-container>
                 <ng-container *ngIf="control.errors?.['minlength']">min 3 symbols!</ng-container>
             </ng-template>
         </nz-form-control>

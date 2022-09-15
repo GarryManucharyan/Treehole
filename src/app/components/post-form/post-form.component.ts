@@ -1,4 +1,5 @@
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';;
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,6 +13,7 @@ export class PostFormComponent implements OnInit {
   public newPostForm!: FormGroup;
 
   constructor(
+    private dataService: DataServiceService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }
@@ -29,7 +31,7 @@ export class PostFormComponent implements OnInit {
         Validators.minLength(3),
       ]]
     })
-    // this.newPostForm.get('title')?.valueChanges.subscribe(() => {
+    // this.newPostForm.get('title')?.valueChanges.subscribe(() => {      // <=== kodi es hatvacy im gracy chi, chem jnjum vor usumnasirem
     //   console.log(this.newPostForm.controls);
     // })
   }
@@ -39,7 +41,7 @@ export class PostFormComponent implements OnInit {
   }
 
   onNavigateToHomePage(): void {
-    this.router.navigate([""])
+    this.dataService.currentPageSubject.next({ currentPage: 1, pageSize: 10 });
+    this.router.navigate([""]);
   }
-
 }

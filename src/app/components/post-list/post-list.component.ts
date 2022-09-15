@@ -9,27 +9,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post-list.component.less']
 })
 export class PostListComponent implements OnInit, OnDestroy {
+  private subscribtions: Subscription[] = [];
 
-  private subscribtions: Subscription[] = []
-
-  public posts!: PostModel[];
   public today: number = Date.now();
+  public posts: PostModel[]|null = [];
+
   constructor(private dataService: DataServiceService) { }
 
   ngOnInit(): void {
-    this.subscribtions.push(this.dataService.currentPageSubject.subscribe(currentPage => {
-      this.posts = this.dataService.pageData.postsBuffer[currentPage - 1]
+    this.subscribtions.push(this.dataService.currentPageSubject.subscribe(res => {
+      if (res.currentPage && res.pageSize) {
+        this.initPage(res.currentPage, res.pageSize)
+      }
     }))
-
-    this.dataService.pageSizeSubject.subscribe(() => {
-      this.posts = this.dataService.pageData.postsBuffer[0]
-    })
-    // TODO: 
-    setTimeout(() => {
-      this.posts = this.dataService.pageData.postsBuffer[0]
-    }, 100);
   }
 
+  initPage(pageNumber: number, pageSize: number = 10) {
+    if (pageNumber && pageSize) {
+      this.posts = this.dataService.getPageData({ pageNumber, pageSize });
+    }
+  }
 
   onLike(post: PostModel): void {
     if (!post.isLiked) {
@@ -61,7 +60,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     for (let i = 0; i < this.subscribtions.length; i++) {
-      this.subscribtions[i].unsubscribe()
+      this.subscribtions[i].unsubscribe();
     }
   }
 }
