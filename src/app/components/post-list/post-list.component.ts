@@ -1,6 +1,7 @@
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostModel, CommentModel } from 'src/app/postModels';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,7 +15,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   public today: number = Date.now();
   public posts: PostModel[] | null = [];
 
-  constructor(private dataService: DataServiceService) { }
+  constructor(
+    private dataService: DataServiceService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.subscribtions.push(this.dataService.currentPageSubject.subscribe(res => {
@@ -59,7 +63,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onGetCommentsByPostId(post: PostModel, postId: number): void {
-    post.showComments = !post.showComments
     if (!post.isCommentsGot) {
       this.dataService.getCommentsByPostId(postId).subscribe(comments => {
         for (let comment of comments) {
@@ -70,11 +73,10 @@ export class PostListComponent implements OnInit, OnDestroy {
           comment.body = comment.body.split("\n").join(" ")
         }
         post.comments = comments;
-        post.commentsCount = comments.length;
         post.isCommentsGot = true;
-        console.log(comments);
-      })
-    }
+        this.router.navigate(["/posts", post.id])
+      }) 
+    } else  this.router.navigate(["/posts", post.id])
   }
 
   ngOnDestroy() {

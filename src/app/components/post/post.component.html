@@ -1,0 +1,81 @@
+<div class="all">
+    <div class="post" *ngIf="postData">
+        <p class="postTitle">
+            {{postData.title}}
+        </p>
+        <p class="postBody">
+            {{postData.body}}
+        </p>
+        <p class="postDate">
+            {{today - postData.id * 7777777 | date: 'MMM d, yyyy, h:mm:ss a '}}
+        </p>
+        <div class="actions">
+            <span id="postLike">
+                <span nz-icon title="like" id="like" nzType="like" (click)="onLike(postData)"
+                    [ngClass]="{liked:postData.isLiked}"></span>
+                {{postData.likesCount}}
+            </span>
+            <span id="postDisLike">
+                <span nz-icon title="dislike" id="disLike" nzType="dislike" (click)="onDislike(postData)"
+                    [ngClass]="{disliked:postData.isDisliked}"></span>
+                {{postData.dislikesCount}}
+            </span>
+            <span id="postComment">
+                <span nz-icon nzType="comment" title="comment" style="margin-right: 8px;"
+                    (click)="ShowNewCommentForm = !ShowNewCommentForm"></span>
+            </span>
+        </div>
+    </div>
+    <div class="newComment" *ngIf="ShowNewCommentForm">
+        <form nz-form [formGroup]="newCommentForm">
+            <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="messageError">
+                    <textarea id="message" nz-input id="message" rows="2" formControlName="message"
+                        placeholder="Comment"></textarea>
+                    <ng-template #messageError let-control>
+                        <ng-container *ngIf="control.errors?.['required']">Please input the comment!</ng-container>
+                        <ng-container *ngIf="control.errors?.['minlength']">Please enter a longer text</ng-container>
+                        <ng-container *ngIf="control.errors?.['maxlength']">max 1000 symbols!</ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="0" nzNoColon></nz-form-label>
+                <nz-form-control>
+                    <button nz-button type="button" nzType="default" [nzDanger]="mouseIn" (mouseenter)="onMouseInOut()"
+                        (mouseleave)="onMouseInOut()" (click)="ShowNewCommentForm = !ShowNewCommentForm"
+                        class="addCommentFormButton"><span nz-icon nzType="close"
+                            nzTheme="outline"></span>Cancel</button>
+                    <button nz-button type="submit" nzType="primary" [disabled]="newCommentForm.invalid"
+                        (click)="onSubmit(newCommentForm.controls['message'].value)" class="addCommentFormButton"><span
+                            nz-icon nzType="save" nzTheme="outline"></span>Submit</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+    <div class="comments">
+        <ng-container *ngIf="postData">
+            <span class="repliesCount">{{postData.comments.length}} replies</span>
+            <div class="commentBody" *ngFor="let comment of postData.comments">
+                <h4 class="commentAutor">{{comment.email}}</h4>
+                <!-- [nzAutor] chem kirarel im uzac tesqy stanalu hamar-->
+                <nz-comment [nzDatetime]="'2 days ago'">
+                    <!-- [nzDateTime-y spasuma data string-i tesqov vory petqa backEndic stanal]-->
+                    <nz-comment-content>
+                        <p>{{ comment.body }}</p>
+                    </nz-comment-content>
+                    <nz-comment-action>
+                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(comment)"
+                            [ngClass]="{liked:comment.isLiked}"></span>
+                        {{comment.likesCount}}
+                    </nz-comment-action>
+                    <nz-comment-action>
+                        <span nz-icon class="dislike" nzType="dislike" style="margin-right: 8px;"
+                            (click)="onDislike(comment)" [ngClass]="{disliked:comment.isDisliked}"></span>
+                        {{comment.dislikesCount}}
+                    </nz-comment-action>
+                </nz-comment>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -23,13 +23,7 @@ export class DataServiceService {
       posts = posts.map(post => {
         post.likesCount = Math.floor(Math.random() * 15);
         post.dislikesCount = Math.floor(Math.random() * 5);
-        // TODO get comments 
-        // this.getCommentsByPostId(post.id).subscribe(comments => {
-        //   post.commentsCount = comments.length;
-        //   post.comments = comments
-        // })
-        post.comments = [],
-        post.commentsCount = post.comments.length;
+        post.comments = [];
         return post
       })
       return posts

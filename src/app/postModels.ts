@@ -9,8 +9,6 @@ export interface PostModel {
     id: number,
     comments: CommentModel[],
     isCommentsGot: boolean,
-    showComments: boolean,
-    commentsCount: number,
 }
 
 export interface CommentModel {
@@ -19,7 +17,6 @@ export interface CommentModel {
     likesCount: number,
     isLiked?: boolean,
     postId: number,
-    title: string,
     email: string,
     body: string,
     id: number,

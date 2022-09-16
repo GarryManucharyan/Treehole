@@ -43,14 +43,12 @@ export class PostFormComponent implements OnInit {
       body: this.newPostForm.controls['message'].value,
       userId: this.dataService.localData.length,
       id: this.dataService.localData.length,
-      commentsCount: 0,
       dislikesCount: 0,
       likesCount: 0,
       isDisliked: false,
       isLiked: false,
       comments: [],
       isCommentsGot: false,
-      showComments: false,
     })
     this.onNavigateToHomePage()
   }

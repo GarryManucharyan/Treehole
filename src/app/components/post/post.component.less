@@ -1,0 +1,100 @@
+.all {
+    background-color: white;
+    border          : solid 1px lightgray;
+}
+
+[nz-icon] {
+    cursor: pointer;
+}
+
+.liked {
+    color: rgb(0, 130, 200);
+}
+
+.disliked {
+    color: rgba(255, 50, 50);
+}
+
+.commentBody {
+    border-bottom: 1px solid rgb(250, 250, 250);
+}
+
+nz-comment {
+    margin       : 10px;
+    margin-left  : 5%;
+    border       : solid 1px rgba(0, 130, 200, 0.1);
+    border-radius: 5px;
+}
+
+nz-comment-content {
+    font-size: 12px;
+}
+
+.repliesCount {
+    display    : inline-block;
+    margin-left: 25px;
+    margin-top : 10px;
+    font-style : italic;
+}
+
+.commentAutor {
+    margin-left: 5%;
+    margin-top : 5px;
+}
+
+.postTitle,
+.postDate,
+.newComment,
+.comments {
+    padding      : 10px 30px 20px;
+    border-bottom: rgb(240, 240, 240) solid 1px;
+}
+
+.postTitle {
+    display    : block;
+    padding    : 10px 30px 13px;
+    font-weight: 500;
+    font-size  : 17px;
+}
+
+.postBody {
+    padding: 0 30px;
+}
+
+.postDate {
+    color  : lightgray;
+    padding: 0 30px 15px;
+}
+
+.commentBody {
+    padding: 15px;
+}
+
+.actions {
+    color          : rgba(0, 130, 200, 0.5);
+    display        : flex;
+    justify-content: space-around;
+    padding        : 0 30px 15px;
+    border-bottom  : 1px solid rgb(240, 240, 240);
+}
+
+#postLike,
+#postDisLike,
+#postComment {
+    text-align: center;
+    display   : inline-block;
+    width     : 33%;
+}
+
+#postLike,
+#postDisLike {
+    border-right: solid 1px rgb(240, 240, 240);
+}
+
+.addCommentFormButton {
+    margin-right: 25px;
+}
+
+form {
+    padding: 15px 0 0;
+}
