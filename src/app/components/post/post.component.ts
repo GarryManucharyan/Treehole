@@ -1,9 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentModel, PostModel } from 'src/app/post-models';
 import { DataService } from 'src/app/services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
 export class PostComponent implements OnInit {
   public postData!: PostModel | null;
   public today: number = Date.now();
-  public ShowNewCommentForm = false;
+  public showNewCommentForm = false;
   public mouseIn = false
 
   constructor(
@@ -82,14 +81,7 @@ export class PostComponent implements OnInit {
     this.router.navigate([""]);
   }
 
-  onMouseInOut() {
-    this.mouseIn = !this.mouseIn
-  }
-
   onSubmit(commentBody: string) {
-
-    //TODO: remove previous comment text from textarea after submit
-
     console.log(commentBody);
     const newComment: CommentModel = {
       body: commentBody,
@@ -102,7 +94,7 @@ export class PostComponent implements OnInit {
       postId: this.postData?.id || NaN
     };
     this.postData?.comments.unshift(newComment),
-      this.ShowNewCommentForm = !this.ShowNewCommentForm
+      this.newCommentForm.reset()
   }
 
 }

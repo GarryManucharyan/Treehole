@@ -11,6 +11,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import en from '@angular/common/locales/en';
@@ -30,6 +31,7 @@ registerLocaleData(en);
     NzFormModule,
     NzListModule,
     NzIconModule,
+    NzCardModule
   ],
    exports: [
     CommonModule,
@@ -43,6 +45,7 @@ registerLocaleData(en);
     NzFormModule,
     NzListModule,
     NzIconModule,
+    NzCardModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

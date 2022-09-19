@@ -13,13 +13,14 @@
                 {{ post.body }}
                 <ul nz-list-item-actions class="actions">
                     <nz-list-item-action>
-                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(post)"
-                            [ngClass]="{liked:post.isLiked}"></span>
+                        <span nz-icon class="like" nzType="like" [nzTheme]="post.isLiked ? 'twotone' : 'outline'"
+                            style="margin-right: 8px;" (click)="onLike(post)"></span>
                         {{post.likesCount}}
                     </nz-list-item-action>
                     <nz-list-item-action>
-                        <span nz-icon class="dislike" nzType="dislike" style="margin-right: 8px;"
-                            (click)="onDislike(post)" [ngClass]="{disliked:post.isDisliked}"></span>
+                        <span nz-icon class="dislike" nzType="dislike"
+                            [nzTheme]="post.isDisliked? 'twotone' : 'outline'" style="margin-right: 8px;"
+                            (click)="onDislike(post)"></span>
                         {{post.dislikesCount}}
                     </nz-list-item-action>
                     <nz-list-item-action>

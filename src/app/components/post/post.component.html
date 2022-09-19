@@ -1,51 +1,65 @@
 <div class="all">
     <div class="post" *ngIf="postData">
-        <p class="postTitle">
-            {{postData.title}}
-        </p>
-        <p class="postBody">
-            {{postData.body}}
-        </p>
-        <p class="postDate">
-            {{today - postData.id * 7777777 | date: 'MMM d, yyyy, h:mm:ss a '}}
-        </p>
-        <div class="actions">
-            <span id="postLike">
-                <span nz-icon title="like" id="like" nzType="like" (click)="onLike(postData)"
-                    [ngClass]="{liked:postData.isLiked}"></span>
+        <nz-card [nzActions]="[
+                        actionLike,
+                        actionDislike,
+                        actionComment
+                        ]" nzTitle={{postData.title}}>
+            <p>
+                {{postData.body}}
+            </p>
+            <nz-card-meta nzDescription="{{today - postData.id * 7777777 | date: 'MMM d, yyyy, h:mm:ss a'}}">
+            </nz-card-meta>
+        </nz-card>
+        <ng-template #actionLike id="postLike">
+            <span nz-icon title="like" nzType="like" id="like" [nzTheme]="postData.isLiked ? 'twotone' : 'outline'"
+                (click)="onLike(postData)">
                 {{postData.likesCount}}
             </span>
-            <span id="postDisLike">
-                <span nz-icon title="dislike" id="disLike" nzType="dislike" (click)="onDislike(postData)"
-                    [ngClass]="{disliked:postData.isDisliked}"></span>
+        </ng-template>
+        <ng-template #actionDislike id="postDisLike">
+            <span nz-icon title="dislike" nzType="dislike" [nzTheme]="postData.isDisliked ? 'twotone' : 'outline'"
+                (click)="onDislike(postData)">
                 {{postData.dislikesCount}}
             </span>
-            <span id="postComment">
-                <span nz-icon nzType="comment" title="comment" style="margin-right: 8px;"
-                    (click)="ShowNewCommentForm = !ShowNewCommentForm"></span>
+        </ng-template>
+        <ng-template #actionComment id="postComment">
+            <span nz-icon nzType="comment" title="comment" style="margin-right: 8px;"
+                (click)="showNewCommentForm = !showNewCommentForm">
             </span>
-        </div>
+        </ng-template>
     </div>
-    <div class="newComment" *ngIf="ShowNewCommentForm">
+    <div *ngIf="showNewCommentForm" class="newComment">
         <form nz-form [formGroup]="newCommentForm">
             <nz-form-item>
                 <nz-form-control [nzSpan]="24" [nzErrorTip]="messageError">
-                    <textarea id="message" nz-input id="message" rows="2" formControlName="message"
-                        placeholder="Comment"></textarea>
+                    <textarea nz-input id="message" formControlName="message" rows="2" placeholder="Comment">
+                    </textarea>
                     <ng-template #messageError let-control>
-                        <ng-container *ngIf="control.errors?.['required']">Please input the comment!</ng-container>
-                        <ng-container *ngIf="control.errors?.['minlength']">Please enter a longer text</ng-container>
-                        <ng-container *ngIf="control.errors?.['maxlength']">max 1000 symbols!</ng-container>
+                        <ng-container *ngIf="control.errors?.['required']">
+                            Please input the comment
+                        </ng-container>
+                        <ng-container *ngIf="control.errors?.['minlength']">
+                            Please enter a longer text
+                        </ng-container>
+                        <ng-container *ngIf="control.errors?.['maxlength']">
+                            max 1000 symbols!
+                        </ng-container>
                     </ng-template>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <nz-form-label [nzSpan]="0" nzNoColon></nz-form-label>
+                <nz-form-label nzNoColon [nzSpan]="0">
+                </nz-form-label>
                 <nz-form-control>
-                    <button nz-button type="button" nzType="default" [nzDanger]="mouseIn" (mouseenter)="onMouseInOut()"
-                        (mouseleave)="onMouseInOut()" (click)="ShowNewCommentForm = !ShowNewCommentForm"
-                        class="addCommentFormButton"><span nz-icon nzType="close"
-                            nzTheme="outline"></span>Cancel</button>
+                    <!-- [nzDanger]-i style-eri kirarman hamar hover-i poxaren ogtagorcel em mouseIn mouseOut eventListener-ner-->
+                    <button nz-button type="button" class="addCommentFormButton" nzType="default" [nzDanger]="mouseIn"
+                        (click)="showNewCommentForm = !showNewCommentForm" (mouseenter)="mouseIn=true"
+                        (mouseleave)="mouseIn=false">
+                        <span nz-icon nzType="close" nzTheme="outline">
+                        </span>
+                        Cancel
+                    </button>
                     <button nz-button type="submit" nzType="primary" [disabled]="newCommentForm.invalid"
                         (click)="onSubmit(newCommentForm.controls['message'].value)" class="addCommentFormButton"><span
                             nz-icon nzType="save" nzTheme="outline"></span>Submit</button>
@@ -59,19 +73,18 @@
             <div class="commentBody" *ngFor="let comment of postData.comments">
                 <h4 class="commentAutor">{{comment.email}}</h4>
                 <!-- [nzAutor] chem kirarel im uzac tesqy stanalu hamar-->
-                <nz-comment [nzDatetime]="'2 days ago'">
-                    <!-- [nzDateTime-y spasuma data string-i tesqov vory petqa backEndic stanal]-->
+                <nz-comment [nzDatetime]="today - comment.id * 1111111  | dateAgo">
                     <nz-comment-content>
                         <p>{{ comment.body }}</p>
                     </nz-comment-content>
                     <nz-comment-action>
                         <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(comment)"
-                            [ngClass]="{liked:comment.isLiked}"></span>
+                            [nzTheme]="comment.isLiked ? 'twotone' : 'outline'"></span>
                         {{comment.likesCount}}
                     </nz-comment-action>
                     <nz-comment-action>
                         <span nz-icon class="dislike" nzType="dislike" style="margin-right: 8px;"
-                            (click)="onDislike(comment)" [ngClass]="{disliked:comment.isDisliked}"></span>
+                            (click)="onDislike(comment)" [nzTheme]="comment.isDisliked ? 'twotone' : 'outline'"></span>
                         {{comment.dislikesCount}}
                     </nz-comment-action>
                 </nz-comment>

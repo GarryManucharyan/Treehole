@@ -5,8 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
-  { path: "", component: PostListComponent },
+  { path: "", pathMatch: "full", redirectTo: "posts" },
   { path: "add-post", component: PostFormComponent },
+  { path: "posts", component: PostListComponent },
   { path: "posts/:id", component: PostComponent },
 ]
 
