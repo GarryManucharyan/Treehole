@@ -6,8 +6,8 @@ import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
   { path: "", component: PostListComponent },
-  { path: "create_new_post", component: PostFormComponent, pathMatch: "full" },
-  { path: "posts/:id", component: PostComponent, },
+  { path: "add-post", component: PostFormComponent },
+  { path: "posts/:id", component: PostComponent },
 ]
 
 @NgModule({

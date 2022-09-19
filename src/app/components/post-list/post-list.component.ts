@@ -1,6 +1,6 @@
-import { DataServiceService } from 'src/app/services/data-service.service';
+import { PostModel, CommentModel } from 'src/app/post-models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PostModel, CommentModel } from 'src/app/postModels';
+import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   public posts: PostModel[] | null = [];
 
   constructor(
-    private dataService: DataServiceService,
+    private dataService: DataService,
     private router: Router
   ) { }
 

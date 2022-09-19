@@ -1,6 +1,6 @@
-import { DataServiceService } from 'src/app/services/data-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommentModel, PostModel } from 'src/app/postModels';
+import { CommentModel, PostModel } from 'src/app/post-models';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class PostComponent implements OnInit {
   public mouseIn = false
 
   constructor(
-    private dataService: DataServiceService,
+    private dataService: DataService,
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -88,7 +88,7 @@ export class PostComponent implements OnInit {
 
   onSubmit(commentBody: string) {
 
-    //TODO: remove previous comment text from textarea
+    //TODO: remove previous comment text from textarea after submit
 
     console.log(commentBody);
     const newComment: CommentModel = {

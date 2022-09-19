@@ -1,5 +1,5 @@
-import { PostModel, CommentModel } from '../postModels';
-import { BehaviorSubject, map, Observable} from 'rxjs';
+import { PostModel, CommentModel } from '../post-models';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -9,11 +9,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 
-export class DataServiceService {
+export class DataService {
 
-  public currentPageSubject: BehaviorSubject<{ currentPage: number | null , pageSize: number | null }>;
-  constructor(private http: HttpClient) { 
-    this.currentPageSubject = new BehaviorSubject<{ currentPage: number | null , pageSize: number | null }>({ currentPage:  null, pageSize:  null });
+  public currentPageSubject: BehaviorSubject<{ currentPage: number | null, pageSize: number | null }>;
+  constructor(private http: HttpClient) {
+    this.currentPageSubject = new BehaviorSubject<{ currentPage: number | null, pageSize: number | null }>({ currentPage: null, pageSize: null });
   }
 
   public localData: PostModel[] = []
@@ -30,7 +30,7 @@ export class DataServiceService {
     }))
   }
 
-  getCommentsByPostId(postId: number):Observable<CommentModel[]>{
+  getCommentsByPostId(postId: number): Observable<CommentModel[]> {
     return this.http.get<CommentModel[]>(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
   }
 

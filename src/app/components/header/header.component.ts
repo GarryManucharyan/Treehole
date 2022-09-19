@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onNavigateToPostForm(): void {
-    this.router.navigate(["create_new_post"])
+    this.router.navigate(["add-post"])
   }
 
 }

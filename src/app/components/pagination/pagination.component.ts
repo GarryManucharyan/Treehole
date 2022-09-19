@@ -1,5 +1,5 @@
-import { DataServiceService } from 'src/app/services/data-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   public pageSize: number = 10;
   public total?: number;
 
-  constructor(private dataService: DataServiceService) { }
+  constructor(private dataService: DataService) { }
 
   private subscribtions: Subscription[] = []
 

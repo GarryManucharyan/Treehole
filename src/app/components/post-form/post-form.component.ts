@@ -1,5 +1,5 @@
-import { DataServiceService } from 'src/app/services/data-service.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ export class PostFormComponent implements OnInit {
   public newPostForm!: FormGroup;
 
   constructor(
-    private dataService: DataServiceService,
+    private dataService: DataService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }
