@@ -1,4 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { CommentModel, PostModel } from 'src/app/post-models';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,15 +11,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post.component.less']
 })
 export class PostComponent implements OnInit {
+  public showNewCommentForm: boolean = false;
   public postData!: PostModel | null;
   public today: number = Date.now();
-  public showNewCommentForm = false;
-  public mouseIn = false
+  public confirmModal?: NzModalRef;
+  public mouseIn: boolean = false;
 
   constructor(
-    private dataService: DataService,
     private activeRoute: ActivatedRoute,
+    private dataService: DataService,
     private formBuilder: FormBuilder,
+    private modal: NzModalService,
     private router: Router,
   ) { }
 
@@ -95,6 +98,19 @@ export class PostComponent implements OnInit {
     };
     this.postData?.comments.unshift(newComment),
       this.newCommentForm.reset()
+  }
+
+  showConfirm(): void {
+    this.confirmModal = this.modal.confirm({
+      nzTitle: 'Cancel Editing',
+      nzContent: 'You got unsaved changes. Are you sure you want to cancel editing?',
+      nzOnCancel: () => {
+        this.newCommentForm.reset();
+        this.showNewCommentForm = false
+      },
+      nzOkText: "No, continue editing.",
+      nzCancelText: "Yes, don't save."
+    });
   }
 
 }

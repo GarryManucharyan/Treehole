@@ -54,7 +54,7 @@
                 <nz-form-control>
                     <!-- [nzDanger]-i style-eri kirarman hamar hover-i poxaren ogtagorcel em mouseIn mouseOut eventListener-ner-->
                     <button nz-button type="button" class="addCommentFormButton" nzType="default" [nzDanger]="mouseIn"
-                        (click)="showNewCommentForm = !showNewCommentForm" (mouseenter)="mouseIn=true"
+                    (click)="showConfirm()" (mouseenter)="mouseIn=true"
                         (mouseleave)="mouseIn=false">
                         <span nz-icon nzType="close" nzTheme="outline">
                         </span>

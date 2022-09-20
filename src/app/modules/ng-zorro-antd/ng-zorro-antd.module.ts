@@ -8,6 +8,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -28,12 +29,13 @@ registerLocaleData(en);
     NzLayoutModule,
     NzSpaceModule,
     NzInputModule,
+    NzModalModule,
     NzFormModule,
     NzListModule,
     NzIconModule,
-    NzCardModule
+    NzCardModule,
   ],
-   exports: [
+  exports: [
     CommonModule,
     NzPageHeaderModule,
     NzPaginationModule,
@@ -42,6 +44,7 @@ registerLocaleData(en);
     NzLayoutModule,
     NzSpaceModule,
     NzInputModule,
+    NzModalModule,
     NzFormModule,
     NzListModule,
     NzIconModule,
