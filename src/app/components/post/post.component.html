@@ -54,8 +54,7 @@
                 <nz-form-control>
                     <!-- [nzDanger]-i style-eri kirarman hamar hover-i poxaren ogtagorcel em mouseIn mouseOut eventListener-ner-->
                     <button nz-button type="button" class="addCommentFormButton" nzType="default" [nzDanger]="mouseIn"
-                    (click)="showConfirm()" (mouseenter)="mouseIn=true"
-                        (mouseleave)="mouseIn=false">
+                        (click)="showConfirm()" (mouseenter)="mouseIn=true" (mouseleave)="mouseIn=false">
                         <span nz-icon nzType="close" nzTheme="outline">
                         </span>
                         Cancel
@@ -69,7 +68,7 @@
     </div>
     <div class="comments">
         <ng-container *ngIf="postData">
-            <span class="repliesCount">{{postData.comments.length}} replies</span>
+            <span *ngIf="postData.comments" class="repliesCount">{{postData.comments.length }} replies</span>
             <div class="commentBody" *ngFor="let comment of postData.comments">
                 <h4 class="commentAutor">{{comment.email}}</h4>
                 <!-- [nzAutor] chem kirarel im uzac tesqy stanalu hamar-->

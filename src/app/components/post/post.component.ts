@@ -29,7 +29,13 @@ export class PostComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.postData = this.getPostDataById(this.activeRoute.snapshot.paramMap.get("id"));
+    this.postData = this.dataService.getPostDataByIdFromLocalData(this.activeRoute.snapshot.paramMap.get("id"));
+    if (!this.postData) {
+      this.dataService.getPostById(Number(this.activeRoute.snapshot.paramMap.get("id"))).subscribe(res => {
+        this.postData = res
+      });
+    }
+
 
     this.newCommentForm = this.formBuilder.group({
       message: ['', [
@@ -40,16 +46,7 @@ export class PostComponent implements OnInit {
     })
   }
 
-  getPostDataById(id: string | null): PostModel | null {
-    let result: PostModel | null = null;
-    if (id) {
-      let data = this.dataService.localData.find(post => {
-        return post.id === +id
-      })
-      if (data) return data
-    }
-    return result
-  }
+
 
   onLike(post: PostModel | CommentModel): void {
     if (!post.isLiked) {
@@ -85,7 +82,6 @@ export class PostComponent implements OnInit {
   }
 
   onSubmit(commentBody: string) {
-    console.log(commentBody);
     const newComment: CommentModel = {
       body: commentBody,
       likesCount: 0,
