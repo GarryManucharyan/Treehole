@@ -11,10 +11,11 @@ export class AppComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getPostById(1);
     this.dataService.getAllPosts().subscribe(res => {
       this.dataService.localData = res;
-      this.dataService.currentPageSubject.next({ currentPage: 1, pageSize: 10 })
+      this.dataService.currentPageSubject.next({currentPage:1, pageSize:10})
     })
   }
+
+  
 }

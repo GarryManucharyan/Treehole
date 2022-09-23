@@ -29,13 +29,7 @@ export class PostComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.postData = this.dataService.getPostDataByIdFromLocalData(this.activeRoute.snapshot.paramMap.get("id"));
-    if (!this.postData) {
-      this.dataService.getPostById(Number(this.activeRoute.snapshot.paramMap.get("id"))).subscribe(res => {
-        this.postData = res
-      });
-    }
-
+    this.postData = this.getPostDataById(Number( this.activeRoute.snapshot.paramMap.get("id")));
 
     this.newCommentForm = this.formBuilder.group({
       message: ['', [
@@ -46,7 +40,9 @@ export class PostComponent implements OnInit {
     })
   }
 
-
+  getPostDataById(id: number | null): PostModel | null {
+    return this.dataService.getPostById(id)
+  }
 
   onLike(post: PostModel | CommentModel): void {
     if (!post.isLiked) {
@@ -81,19 +77,10 @@ export class PostComponent implements OnInit {
     this.router.navigate([""]);
   }
 
-  onSubmit(commentBody: string) {
-    const newComment: CommentModel = {
-      body: commentBody,
-      likesCount: 0,
-      dislikesCount: 0,
-      email: "Some_email@bldux.com",
-      id: this.postData?.comments.length || NaN,
-      isLiked: false,
-      isDisliked: false,
-      postId: this.postData?.id || NaN
-    };
-    this.postData?.comments.unshift(newComment),
-      this.newCommentForm.reset()
+  onSubmit(commentBody: string, post: PostModel | null) {
+    console.log(commentBody);
+    this.dataService.addCommentToPost(commentBody, post)
+    this.newCommentForm.reset()
   }
 
   showConfirm(): void {

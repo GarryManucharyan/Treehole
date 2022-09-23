@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="newPostForm" (ngSubmit)="submitPost()">
+<form nz-form [formGroup]="newPostForm" (ngSubmit)="submitPost(this.newPostForm.controls['title'].value,this.newPostForm.controls['message'].value)">
     <nz-form-item>
         <nz-form-label nzFor="title" [nzSpan]="6" nzRequired>Title</nz-form-label>
         <nz-form-control [nzSpan]="14"  [nzErrorTip]="titleError">

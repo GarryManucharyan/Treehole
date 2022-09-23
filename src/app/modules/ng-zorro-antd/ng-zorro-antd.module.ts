@@ -21,7 +21,6 @@ registerLocaleData(en);
 
 @NgModule({
   imports: [
-    CommonModule,
     NzPageHeaderModule,
     NzPaginationModule,
     NzCommentModule,
@@ -30,13 +29,13 @@ registerLocaleData(en);
     NzSpaceModule,
     NzInputModule,
     NzModalModule,
+    CommonModule,
     NzFormModule,
     NzListModule,
     NzIconModule,
     NzCardModule,
   ],
   exports: [
-    CommonModule,
     NzPageHeaderModule,
     NzPaginationModule,
     NzCommentModule,
@@ -45,10 +44,11 @@ registerLocaleData(en);
     NzSpaceModule,
     NzInputModule,
     NzModalModule,
+    CommonModule,
     NzFormModule,
     NzListModule,
     NzIconModule,
-    NzCardModule
+    NzCardModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

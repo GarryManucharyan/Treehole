@@ -37,22 +37,10 @@ export class PostFormComponent implements OnInit {
     // })
   }
 
-  submitPost() {
-    this.dataService.localData.unshift({
-      title: this.newPostForm.controls['title'].value,
-      body: this.newPostForm.controls['message'].value,
-      userId: this.dataService.localData.length,
-      id: this.dataService.localData.length,
-      dislikesCount: 0,
-      likesCount: 0,
-      isDisliked: false,
-      isLiked: false,
-      comments: [],
-      isCommentsGot: false,
-    })
-    this.onNavigateToHomePage()
+  submitPost(title: string, message: string): void {
+    this.dataService.addPostToLocalData(title, message);
+    this.onNavigateToHomePage();
   }
-
   onNavigateToHomePage(): void {
     this.dataService.currentPageSubject.next({ currentPage: 1, pageSize: 10 });
     this.router.navigate([""]);

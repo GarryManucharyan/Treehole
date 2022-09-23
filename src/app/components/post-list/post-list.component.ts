@@ -75,8 +75,8 @@ export class PostListComponent implements OnInit, OnDestroy {
         post.comments = comments;
         post.isCommentsGot = true;
         this.router.navigate(["/posts", post.id])
-      }) 
-    } else  this.router.navigate(["/posts", post.id])
+      })
+    } else this.router.navigate(["/posts", post.id])
   }
 
   ngOnDestroy() {
