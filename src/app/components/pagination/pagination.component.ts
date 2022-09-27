@@ -17,7 +17,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   private subscribtions: Subscription[] = []
 
   ngOnInit(): void {
-    this.subscribtions.push(this.dataService.currentPageSubject.subscribe(() => {
+    this.subscribtions.push(this.dataService.currentPageSubject.subscribe((res) => {
       this.total = this.dataService.localData.length;
     }))
     this.subscribtions.push(this.dataService.homePageBtnSubject.subscribe(() => {

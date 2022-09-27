@@ -1,6 +1,7 @@
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +16,7 @@ export class PostFormComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private formBuilder: FormBuilder,
+    private http: HttpClient,
     private router: Router
   ) { }
 
@@ -35,7 +37,7 @@ export class PostFormComponent implements OnInit {
   }
 
   submitPost() {
-    this.dataService.localData.unshift({
+    const newPost = {
       title: this.newPostForm.controls['title'].value,
       body: this.newPostForm.controls['message'].value,
       userId: this.dataService.localData.length,
@@ -44,7 +46,11 @@ export class PostFormComponent implements OnInit {
       likesCount: 0,
       isLiked: null,
       comments: [],
+    }
+    this.http.post("https://jsonplaceholder.typicode.com/posts", newPost).subscribe(res => {
+      console.log(res);
     })
+    this.dataService.localData.unshift(newPost)
     this.onNavigateToHomePage()
   }
 

@@ -17,5 +17,4 @@ export interface CommentModel {
     likesCount: number,
     dislikesCount: number,
     isLiked?: boolean | null,
-    isDisliked?: boolean,
 }

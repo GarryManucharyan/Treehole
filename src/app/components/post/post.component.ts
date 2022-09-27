@@ -40,34 +40,31 @@ export class PostComponent implements OnInit {
   }
 
   initPost(postId: number) {
-    if (this.dataService.getPostByIdFromlocalData(postId)) {
-      this.postData = this.dataService.getPostByIdFromlocalData(postId) as PostModel;
-      this.initComments(this.postData.id);
+    const localPostData: PostModel | null = this.dataService.getPostByIdFromlocalData(postId)
+    if (localPostData) {
+      this.postData = localPostData;
+      this.initComments(this.postData.id, this.postData).subscribe();
     } else {
       this.dataService.getPostById(postId).pipe(mergeMap(post => {
-        return this.dataService.getCommentsByPostId(postId).pipe(map(comments => {
-          post.comments = comments;
-          return post;
-        }));
+        return this.initComments(postId, post);
       })).subscribe(post => {
         this.postData = post
       });
     }
   }
 
-  initComments(postId: number) {
-    this.dataService.getCommentsByPostId(postId).subscribe(comments => {
-      if (this.postData) {
-        this.postData.comments = comments;
-      }
-    })
+  initComments(postId: number, post: PostModel) {
+    return this.dataService.getCommentsByPostId(postId).pipe(map(comments => {
+      post.comments = comments;
+      return post;
+    }))
   }
 
-  onLike(post: PostModel | CommentModel, action: string): void {
+  onLike(post: PostModel | CommentModel, action: "like" | "dislike"): void {
     this.dataService.react(post, action)
   }
 
-  onSubmit(post: PostModel | null, commentBody: string) {
+  onSubmit(post: PostModel , commentBody: string) {
     this.dataService.addCommentToPost(post, commentBody)
     this.newCommentForm.reset()
   }

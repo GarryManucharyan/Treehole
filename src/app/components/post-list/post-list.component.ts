@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.posts = this.dataService.getPageData({ currentPage, pageSize });
   }
 
-  onLike(post: PostModel | CommentModel, action: string): void {
+  onLike(post: PostModel | CommentModel, action: "like" | "dislike"): void {
     this.dataService.react(post, action)
   }
 
