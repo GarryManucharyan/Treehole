@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getAllPosts().subscribe(res => {
       this.dataService.localData = res;
-      this.dataService.currentPageSubject.next({currentPage:1, pageSize:10})
+      this.dataService.currentPageSubject.next({ currentPage: 1, pageSize: 10 });
     })
   }
 }

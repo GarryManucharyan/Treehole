@@ -32,9 +32,6 @@ export class PostFormComponent implements OnInit {
         Validators.maxLength(1000),
       ]]
     })
-    // this.newPostForm.get('title')?.valueChanges.subscribe(() => {      // <=== kodi es hatvacy im gracy chi, chem jnjum vor usumnasirem
-    //   console.log(this.newPostForm.controls);
-    // })
   }
 
   submitPost() {
@@ -45,10 +42,8 @@ export class PostFormComponent implements OnInit {
       id: this.dataService.localData.length,
       dislikesCount: 0,
       likesCount: 0,
-      isDisliked: false,
-      isLiked: false,
+      isLiked: null,
       comments: [],
-      isCommentsGot: false,
     })
     this.onNavigateToHomePage()
   }

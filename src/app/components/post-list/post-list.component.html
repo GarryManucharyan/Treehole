@@ -7,25 +7,25 @@
                         {{ post.title }}
                     </nz-list-item-meta-title>
                     <nz-list-item-meta-description>
-                        {{today - post.id * 7777777 | date: 'MMM d, yyyy, h:mm:ss a '}}
+                        {{today - post.id * 7777777 | date: 'MMM d, yyyy, h:mm:ss a'}}
                     </nz-list-item-meta-description>
                 </nz-list-item-meta>
                 {{ post.body }}
                 <ul nz-list-item-actions class="actions">
                     <nz-list-item-action>
                         <span nz-icon class="like" nzType="like" [nzTheme]="post.isLiked ? 'twotone' : 'outline'"
-                            style="margin-right: 8px;" (click)="onLike(post)"></span>
+                            style="margin-right: 8px;" (click)="onLike(post, 'like')"></span>
                         {{post.likesCount}}
                     </nz-list-item-action>
                     <nz-list-item-action>
                         <span nz-icon class="dislike" nzType="dislike"
-                            [nzTheme]="post.isDisliked? 'twotone' : 'outline'" style="margin-right: 8px;"
-                            (click)="onDislike(post)"></span>
+                            [nzTheme]="post.isLiked === false ? 'twotone' : 'outline'" style="margin-right: 8px;"
+                            (click)="onLike(post, 'dislike')"></span>
                         {{post.dislikesCount}}
                     </nz-list-item-action>
                     <nz-list-item-action>
                         <span nz-icon nzType="comment" style="margin-right: 8px;"
-                            (click)="onGetCommentsByPostId(post, post.id)"></span>
+                            (click)="navigateToPostPage(post.id)"></span>
                     </nz-list-item-action>
                 </ul>
                 <nz-list-item-extra>

@@ -2,8 +2,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { CommentModel, PostModel } from 'src/app/post-models';
 import { DataService } from 'src/app/services/data.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -12,25 +13,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostComponent implements OnInit {
   public showNewCommentForm: boolean = false;
-  public postData!: PostModel | null;
   public today: number = Date.now();
   public confirmModal?: NzModalRef;
   public mouseIn: boolean = false;
+  public postData!: PostModel;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private dataService: DataService,
     private formBuilder: FormBuilder,
     private modal: NzModalService,
-    private router: Router,
   ) { }
 
   public newCommentForm!: FormGroup;
 
 
   ngOnInit(): void {
-    this.postData = this.getPostDataById(this.activeRoute.snapshot.paramMap.get("id"));
-
+    this.initPost(Number(this.activeRoute.snapshot.paramMap.get("id")))
     this.newCommentForm = this.formBuilder.group({
       message: ['', [
         Validators.required,
@@ -40,64 +39,37 @@ export class PostComponent implements OnInit {
     })
   }
 
-  getPostDataById(id: string | null): PostModel | null {
-    let result: PostModel | null = null;
-    if (id) {
-      let data = this.dataService.localData.find(post => {
-        return post.id === +id
-      })
-      if (data) return data
-    }
-    return result
-  }
-
-  onLike(post: PostModel | CommentModel): void {
-    if (!post.isLiked) {
-      post.isLiked = true;
-      post.likesCount++;
-      if (post.isDisliked) {
-        post.isDisliked = false;
-        post.dislikesCount--;
-      }
+  initPost(postId: number) {
+    if (this.dataService.getPostByIdFromlocalData(postId)) {
+      this.postData = this.dataService.getPostByIdFromlocalData(postId) as PostModel;
+      this.initComments(this.postData.id);
     } else {
-      post.isLiked = false;
-      post.likesCount--;
+      this.dataService.getPostById(postId).pipe(mergeMap(post => {
+        return this.dataService.getCommentsByPostId(postId).pipe(map(comments => {
+          post.comments = comments;
+          return post;
+        }));
+      })).subscribe(post => {
+        this.postData = post
+      });
     }
   }
 
-  onDislike(post: PostModel | CommentModel): void {
-    if (!post.isDisliked) {
-      post.isDisliked = true;
-      post.dislikesCount++;
-      if (post.isLiked) {
-        post.isLiked = false;
-        post.likesCount--;
+  initComments(postId: number) {
+    this.dataService.getCommentsByPostId(postId).subscribe(comments => {
+      if (this.postData) {
+        this.postData.comments = comments;
       }
-    } else {
-      post.isDisliked = false;
-      post.dislikesCount--;
-    }
+    })
   }
 
-  onNavigateToHomePage(): void {
-    this.dataService.currentPageSubject.next({ currentPage: 1, pageSize: 10 });
-    this.router.navigate([""]);
+  onLike(post: PostModel | CommentModel, action: string): void {
+    this.dataService.react(post, action)
   }
 
-  onSubmit(commentBody: string) {
-    console.log(commentBody);
-    const newComment: CommentModel = {
-      body: commentBody,
-      likesCount: 0,
-      dislikesCount: 0,
-      email: "Some_email@bldux.com",
-      id: this.postData?.comments.length || NaN,
-      isLiked: false,
-      isDisliked: false,
-      postId: this.postData?.id || NaN
-    };
-    this.postData?.comments.unshift(newComment),
-      this.newCommentForm.reset()
+  onSubmit(post: PostModel | null, commentBody: string) {
+    this.dataService.addCommentToPost(post, commentBody)
+    this.newCommentForm.reset()
   }
 
   showConfirm(): void {

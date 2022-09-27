@@ -22,61 +22,20 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribtions.push(this.dataService.currentPageSubject.subscribe(res => {
-      if (res.currentPage && res.pageSize) {
         this.initPage(res.currentPage, res.pageSize)
-      }
     }))
   }
 
-  initPage(pageNumber: number, pageSize: number = 10) {
-    if (pageNumber && pageSize) {
-      this.posts = this.dataService.getPageData({ pageNumber, pageSize });
-    }
+  initPage(currentPage: number, pageSize: number) {
+    this.posts = this.dataService.getPageData({ currentPage, pageSize });
   }
 
-  onLike(post: PostModel | CommentModel): void {
-    if (!post.isLiked) {
-      post.isLiked = true;
-      post.likesCount++;
-      if (post.isDisliked) {
-        post.isDisliked = false;
-        post.dislikesCount--;
-      }
-    } else {
-      post.isLiked = false;
-      post.likesCount--;
-    }
+  onLike(post: PostModel | CommentModel, action: string): void {
+    this.dataService.react(post, action)
   }
 
-  onDislike(post: PostModel | CommentModel): void {
-    if (!post.isDisliked) {
-      post.isDisliked = true;
-      post.dislikesCount++;
-      if (post.isLiked) {
-        post.isLiked = false;
-        post.likesCount--;
-      }
-    } else {
-      post.isDisliked = false;
-      post.dislikesCount--;
-    }
-  }
-
-  onGetCommentsByPostId(post: PostModel, postId: number): void {
-    if (!post.isCommentsGot) {
-      this.dataService.getCommentsByPostId(postId).subscribe(comments => {
-        for (let comment of comments) {
-          comment.likesCount = Math.floor(Math.random() * 10);
-          comment.dislikesCount = Math.floor(Math.random() * 3);
-          comment.isLiked = false;
-          comment.isDisliked = false;
-          comment.body = comment.body.split("\n").join(" ")
-        }
-        post.comments = comments;
-        post.isCommentsGot = true;
-        this.router.navigate(["/posts", post.id])
-      }) 
-    } else  this.router.navigate(["/posts", post.id])
+  navigateToPostPage(id: number) {
+    this.router.navigate(["/posts", id])
   }
 
   ngOnDestroy() {

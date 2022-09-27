@@ -20,6 +20,10 @@ export class PaginationComponent implements OnInit, OnDestroy {
     this.subscribtions.push(this.dataService.currentPageSubject.subscribe(() => {
       this.total = this.dataService.localData.length;
     }))
+    this.subscribtions.push(this.dataService.homePageBtnSubject.subscribe(() => {
+      this.onPageIndexChange(1);
+      this.onPageSizeChange(10)
+    }))
   }
 
   onPageSizeChange(pageSize: number): void {

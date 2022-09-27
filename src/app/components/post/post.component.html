@@ -13,13 +13,13 @@
         </nz-card>
         <ng-template #actionLike id="postLike">
             <span nz-icon title="like" nzType="like" id="like" [nzTheme]="postData.isLiked ? 'twotone' : 'outline'"
-                (click)="onLike(postData)">
+                (click)="onLike(postData, 'like')">
                 {{postData.likesCount}}
             </span>
         </ng-template>
         <ng-template #actionDislike id="postDisLike">
-            <span nz-icon title="dislike" nzType="dislike" [nzTheme]="postData.isDisliked ? 'twotone' : 'outline'"
-                (click)="onDislike(postData)">
+            <span nz-icon title="dislike" nzType="dislike"
+                [nzTheme]="postData.isLiked === false ? 'twotone' : 'outline'" (click)="onLike(postData, 'dislike')">
                 {{postData.dislikesCount}}
             </span>
         </ng-template>
@@ -54,14 +54,13 @@
                 <nz-form-control>
                     <!-- [nzDanger]-i style-eri kirarman hamar hover-i poxaren ogtagorcel em mouseIn mouseOut eventListener-ner-->
                     <button nz-button type="button" class="addCommentFormButton" nzType="default" [nzDanger]="mouseIn"
-                    (click)="showConfirm()" (mouseenter)="mouseIn=true"
-                        (mouseleave)="mouseIn=false">
+                        (click)="showConfirm()" (mouseenter)="mouseIn=true" (mouseleave)="mouseIn=false">
                         <span nz-icon nzType="close" nzTheme="outline">
                         </span>
                         Cancel
                     </button>
                     <button nz-button type="submit" nzType="primary" [disabled]="newCommentForm.invalid"
-                        (click)="onSubmit(newCommentForm.controls['message'].value)" class="addCommentFormButton"><span
+                        (click)="onSubmit(postData,newCommentForm.controls['message'].value)" class="addCommentFormButton"><span
                             nz-icon nzType="save" nzTheme="outline"></span>Submit</button>
                 </nz-form-control>
             </nz-form-item>
@@ -78,13 +77,14 @@
                         <p>{{ comment.body }}</p>
                     </nz-comment-content>
                     <nz-comment-action>
-                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(comment)"
+                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(comment, 'like')"
                             [nzTheme]="comment.isLiked ? 'twotone' : 'outline'"></span>
                         {{comment.likesCount}}
                     </nz-comment-action>
                     <nz-comment-action>
                         <span nz-icon class="dislike" nzType="dislike" style="margin-right: 8px;"
-                            (click)="onDislike(comment)" [nzTheme]="comment.isDisliked ? 'twotone' : 'outline'"></span>
+                            (click)="onLike(comment, 'dislike')"
+                            [nzTheme]="comment.isLiked === false ? 'twotone' : 'outline'"></span>
                         {{comment.dislikesCount}}
                     </nz-comment-action>
                 </nz-comment>
