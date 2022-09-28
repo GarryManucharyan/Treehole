@@ -12,6 +12,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PostComponent } from './components/post/post.component';
+import { DateTransformPipe } from './pipes/date-transform.pipe';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AppComponent } from './app.component';
     PaginationComponent,
     PostFormComponent,
     PostListComponent,
+    DateTransformPipe,
     HeaderComponent,
     PostComponent,
     AppComponent,

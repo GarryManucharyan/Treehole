@@ -72,7 +72,7 @@
             <div class="commentBody" *ngFor="let comment of postData.comments">
                 <h4 class="commentAutor">{{comment.email}}</h4>
                 <!-- [nzAutor] chem kirarel im uzac tesqy stanalu hamar-->
-                <nz-comment [nzDatetime]="today - comment.id * 1111111  | dateAgo">
+                <nz-comment [nzDatetime]="today - comment.id * 2222222  | dateAgo">
                     <nz-comment-content>
                         <p>{{ comment.body }}</p>
                     </nz-comment-content>
