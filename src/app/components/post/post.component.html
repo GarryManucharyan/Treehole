@@ -60,8 +60,9 @@
                         Cancel
                     </button>
                     <button nz-button type="submit" nzType="primary" [disabled]="newCommentForm.invalid"
-                        (click)="onSubmit(postData,newCommentForm.controls['message'].value)" class="addCommentFormButton"><span
-                            nz-icon nzType="save" nzTheme="outline"></span>Submit</button>
+                        (click)="onSubmit(postData,newCommentForm.controls['message'].value)"
+                        class="addCommentFormButton"><span nz-icon nzType="save"
+                            nzTheme="outline"></span>Submit</button>
                 </nz-form-control>
             </nz-form-item>
         </form>
@@ -72,12 +73,13 @@
             <div class="commentBody" *ngFor="let comment of postData.comments">
                 <h4 class="commentAutor">{{comment.email}}</h4>
                 <!-- [nzAutor] chem kirarel im uzac tesqy stanalu hamar-->
-                <nz-comment [nzDatetime]="today - comment.id * 2222222  | dateAgo">
+                <nz-comment [nzDatetime]="today - comment.id * 1111111  | dateAgo">
                     <nz-comment-content>
                         <p>{{ comment.body }}</p>
                     </nz-comment-content>
                     <nz-comment-action>
-                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;" (click)="onLike(comment, 'like')"
+                        <span nz-icon class="like" nzType="like" style="margin-right: 8px;"
+                            (click)="onLike(comment, 'like')"
                             [nzTheme]="comment.isLiked ? 'twotone' : 'outline'"></span>
                         {{comment.likesCount}}
                     </nz-comment-action>

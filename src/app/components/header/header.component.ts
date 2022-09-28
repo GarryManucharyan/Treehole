@@ -1,5 +1,5 @@
 import { DataService } from 'src/app/services/data.service';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less']
 })
-export class HeaderComponent{
+export class HeaderComponent {
 
   constructor(
     private router: Router,
@@ -23,5 +23,4 @@ export class HeaderComponent{
     this.router.navigate([""]);
     this.dataService.homePageBtnSubject.next(true)
   }
-
 }

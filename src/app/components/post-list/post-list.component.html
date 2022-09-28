@@ -3,7 +3,7 @@
         <ng-container *ngFor="let post of posts">
             <nz-list-item>
                 <nz-list-item-meta>
-                    <nz-list-item-meta-title>
+                    <nz-list-item-meta-title (click)="navigateToPostPage(post.id)">
                         {{ post.title }}
                     </nz-list-item-meta-title>
                     <nz-list-item-meta-description>

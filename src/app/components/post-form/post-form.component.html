@@ -1,7 +1,7 @@
 <form nz-form [formGroup]="newPostForm" (ngSubmit)="submitPost()">
     <nz-form-item>
         <nz-form-label nzFor="title" [nzSpan]="6" nzRequired>Title</nz-form-label>
-        <nz-form-control [nzSpan]="14"  [nzErrorTip]="titleError">
+        <nz-form-control [nzSpan]="14" [nzErrorTip]="titleError">
             <input id="title" nz-input formControlName="title" />
             <ng-template #titleError let-control>
                 <ng-container *ngIf="control.errors?.['required']"> Please input the title</ng-container>
@@ -22,13 +22,12 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <!-- TODO: remove label before form-control -->
-        <nz-form-label  [nzSpan]="10" nzNoColon ></nz-form-label>
-        <nz-form-control >
-            <button  nz-button type="button" nzType="default" (click)="onNavigateToHomePage()"><span nz-icon nzType="left"
+        <nz-form-label [nzSpan]="10" nzNoColon></nz-form-label>
+        <nz-form-control>
+            <button nz-button type="button" nzType="default" (click)="showConfirm()"><span nz-icon nzType="left"
                     nzTheme="outline"></span>Cancel</button>
-            <button nz-button type="submit" nzType="primary" [disabled]="newPostForm.invalid"><span nz-icon nzType="save"
-                    nzTheme="outline"></span>Submit</button>
+            <button nz-button type="submit" nzType="primary" [disabled]="newPostForm.invalid"><span nz-icon
+                    nzType="save" nzTheme="outline"></span>Submit</button>
         </nz-form-control>
     </nz-form-item>
 </form>

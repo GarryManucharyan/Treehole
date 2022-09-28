@@ -84,9 +84,7 @@ export class DataService {
       postId: post?.id || NaN
     };
 
-    this.http.post(`https://jsonplaceholder.typicode.com/comments`, newComment).subscribe(res => {
-      console.log(res);
-    })
+    this.http.post(`https://jsonplaceholder.typicode.com/comments`, newComment).subscribe()
     post?.comments.unshift(newComment);
   }
 
